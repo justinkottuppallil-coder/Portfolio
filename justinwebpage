@@ -1,0 +1,356 @@
+import { motion } from "motion/react";
+import { 
+  Mail, 
+  Phone, 
+  MapPin, 
+  Linkedin, 
+  ExternalLink, 
+  BookOpen, 
+  Briefcase, 
+  Cpu, 
+  Code2, 
+  Zap, 
+  ChevronRight,
+  GraduationCap
+} from "lucide-react";
+import { 
+  personalInfo, 
+  experiences, 
+  education, 
+  projects, 
+  skills,
+  publications
+} from "./data.ts";
+
+const SectionHeader = ({ title, icon: Icon }: { title: string, icon: any }) => (
+  <div className="flex items-center gap-3 mb-8 md:mb-12">
+    <div className="p-2 rounded-lg bg-brand-primary/10 text-brand-primary">
+      <Icon size={24} />
+    </div>
+    <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{title}</h2>
+    <div className="h-[2px] flex-grow bg-slate-200 ml-4 hidden sm:block" />
+  </div>
+);
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-slate-50">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 glass-card border-none rounded-none border-b shadow-none py-4">
+        <div className="container-custom flex justify-between items-center">
+          <span className="font-mono font-bold text-lg tracking-tighter text-brand-primary">
+            JKJ.ELECTRO
+          </span>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+            {["Experience", "Projects", "Publications", "Skills", "Education"].map((item) => (
+              <a 
+                key={item} 
+                href={`#${item.toLowerCase()}`} 
+                className="hover:text-brand-primary transition-colors"
+                id={`nav-${item.toLowerCase()}`}
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+          <a 
+            href={`mailto:${personalInfo.email}`}
+            className="px-4 py-2 bg-slate-900 text-white rounded-full text-sm font-medium hover:bg-brand-primary transition-all shadow-lg shadow-slate-200"
+          >
+            Contact
+          </a>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <header className="relative section-padding pt-32 md:pt-48 pb-20 overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-brand-primary/5 -skew-x-12 translate-x-1/2 pointer-events-none" />
+        <div className="container-custom relative grid lg:grid-cols-[1.5fr_1fr] gap-12 items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider mb-6">
+              <Zap size={14} className="fill-current" />
+              Available for Opportunities
+            </div>
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-slate-900 leading-[1.1]">
+              {personalInfo.name}
+            </h1>
+            <p className="text-xl md:text-2xl text-slate-600 font-light mb-8 leading-relaxed">
+              {personalInfo.title}
+            </p>
+            
+            <div className="flex flex-wrap gap-6 text-slate-500 mb-10">
+              <div className="flex items-center gap-2">
+                <MapPin size={18} className="text-brand-primary" />
+                <span>{personalInfo.location}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail size={18} className="text-brand-primary" />
+                <a href={`mailto:${personalInfo.email}`} className="hover:text-brand-primary">
+                  {personalInfo.email}
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Linkedin size={18} className="text-brand-primary" />
+                <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-brand-primary">
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+
+            <p className="text-lg text-slate-600 max-w-2xl leading-relaxed italic border-l-4 border-brand-primary pl-6">
+              "{personalInfo.summary}"
+            </p>
+          </motion.div>
+
+          {/* Profile Image Column */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative group hidden lg:block"
+          >
+            <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl shadow-slate-300 border-8 border-white bg-slate-200">
+               <img 
+                 src={personalInfo.profileImage} 
+                 alt={personalInfo.name} 
+                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                 referrerPolicy="no-referrer"
+               />
+            </div>
+            {/* Decal / Accent */}
+            <div className="absolute -bottom-6 -left-6 p-5 bg-white rounded-2xl shadow-xl border border-slate-100">
+               <div className="flex items-center gap-4">
+                  <div className="p-3 bg-brand-primary/10 text-brand-primary rounded-xl">
+                    <Zap size={20} className="fill-current" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Expertise</p>
+                    <p className="text-sm font-bold text-slate-800 uppercase tracking-tight">Systems Engineering</p>
+                  </div>
+               </div>
+            </div>
+          </motion.div>
+        </div>
+      </header>
+
+      {/* Experience Section */}
+      <section id="experience" className="section-padding bg-white">
+        <div className="container-custom">
+          <SectionHeader title="Professional Experience" icon={Briefcase} />
+          <div className="grid gap-12">
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="grid md:grid-cols-[1fr_2.5fr] gap-4 md:gap-12"
+              >
+                <div className="flex flex-col">
+                  <span className="font-mono text-sm text-brand-primary font-medium mb-1">
+                    {exp.period}
+                  </span>
+                  <h3 className="text-xl font-bold text-slate-900">{exp.company}</h3>
+                  <p className="text-slate-500 text-sm flex items-center gap-1">
+                    <MapPin size={14} /> {exp.location}
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold text-slate-800 mb-4">{exp.role}</h4>
+                  <ul className="grid gap-3">
+                    {exp.points.map((point, i) => (
+                      <li key={i} className="flex gap-3 text-slate-600 leading-relaxed">
+                        <ChevronRight size={18} className="text-brand-primary flex-shrink-0 mt-1" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="section-padding bg-slate-50">
+        <div className="container-custom">
+          <SectionHeader title="Key Projects" icon={Cpu} />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="glass-card p-8 rounded-2xl flex flex-col group hover:-translate-y-1"
+                id={`project-${index}`}
+              >
+                <div className="mb-6 flex justify-between items-start">
+                  <div className="p-3 rounded-xl bg-slate-900 text-white group-hover:bg-brand-primary transition-colors">
+                    <Zap size={24} />
+                  </div>
+                  <span className="text-xs font-mono text-slate-400">{project.period}</span>
+                </div>
+                <h3 className="text-xl font-bold mb-3 group-hover:text-brand-primary transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-slate-600 text-sm leading-relaxed mb-4 flex-grow">
+                  {project.description}
+                </p>
+                <div className="pt-4 border-t border-slate-100 mt-auto">
+                  <p className="text-xs text-slate-500 leading-relaxed">
+                    {project.details}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Publications Section */}
+      <section id="publications" className="section-padding bg-slate-50">
+        <div className="container-custom">
+          <SectionHeader title="Publications" icon={BookOpen} />
+          <div className="grid gap-6">
+            {publications.map((pub, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="glass-card p-8 rounded-2xl border-l-4 border-brand-primary flex flex-col md:flex-row md:items-center justify-between group"
+              >
+                <div className="flex-grow">
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-brand-primary transition-colors">
+                    {pub.title}
+                  </h3>
+                  <p className="text-slate-600 font-medium">
+                    {pub.conference}
+                  </p>
+                </div>
+                <div className="mt-4 md:mt-0 md:ml-8 flex flex-col items-start md:items-end gap-2">
+                  <span className="text-sm font-mono text-slate-400">
+                    {pub.date}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skills" className="section-padding bg-white">
+        <div className="container-custom">
+          <SectionHeader title="Core Competencies" icon={Code2} />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="space-y-6">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-4">Technical</h3>
+              <div className="flex flex-wrap gap-2">
+                {skills.technical.map((skill) => (
+                  <span key={skill} className="px-3 py-1 bg-brand-primary/5 text-brand-primary text-sm rounded-md border border-brand-primary/10">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-6">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-4">Software Tools</h3>
+              <div className="flex flex-wrap gap-2">
+                {skills.software.map((skill) => (
+                  <span key={skill} className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-md border border-slate-200">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-6">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-4">Hardware & Lab</h3>
+              <div className="flex flex-wrap gap-2">
+                {skills.hardware.map((skill) => (
+                  <span key={skill} className="px-3 py-1 bg-slate-900 text-white text-sm rounded-md shadow-sm">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-6">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-4">Languages</h3>
+              <div className="space-y-3">
+                {skills.languages.map((lang) => (
+                  <div key={lang} className="flex justify-between items-center text-sm font-medium text-slate-700">
+                    <span>{lang}</span>
+                    <div className="h-1 w-20 bg-slate-100 rounded-full overflow-hidden">
+                      <div 
+                        className={`h-full bg-brand-primary ${lang.includes('(Native)') ? 'w-full' : lang.includes('(C1)') ? 'w-4/5' : 'w-2/5'}`} 
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Education Section */}
+      <section id="education" className="section-padding bg-slate-900 text-white overflow-hidden relative">
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,0.2),transparent_70%)]" />
+        </div>
+        <div className="container-custom relative">
+          <SectionHeader title="Academic Background" icon={GraduationCap} />
+          <div className="grid md:grid-cols-2 gap-12">
+            {education.map((edu, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="relative pl-8 border-l border-brand-primary/30"
+              >
+                <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-brand-primary" />
+                <span className="font-mono text-sm text-brand-primary font-medium block mb-2">{edu.period}</span>
+                <h3 className="text-2xl font-bold mb-2">{edu.degree}</h3>
+                <p className="text-slate-400 font-medium mb-1">{edu.institution}</p>
+                <p className="text-slate-500 text-sm">{edu.location}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 bg-slate-950 text-slate-500">
+        <div className="container-custom text-center">
+          <div className="flex justify-center gap-6 mb-8">
+            <a href={`mailto:${personalInfo.email}`} className="p-3 bg-slate-900 rounded-full hover:bg-brand-primary hover:text-white transition-all">
+              <Mail size={20} />
+            </a>
+            <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="p-3 bg-slate-900 rounded-full hover:bg-brand-primary hover:text-white transition-all">
+              <Linkedin size={20} />
+            </a>
+            <a href={`tel:${personalInfo.phone}`} className="p-3 bg-slate-900 rounded-full hover:bg-brand-primary hover:text-white transition-all">
+              <Phone size={20} />
+            </a>
+          </div>
+          <p className="text-sm font-mono tracking-widest uppercase mb-2">Designed & Built by</p>
+          <p className="text-white font-bold text-lg mb-4">{personalInfo.name}</p>
+          <div className="h-px w-24 bg-slate-800 mx-auto mb-6" />
+          <p className="text-xs">© {new Date().getFullYear()} — All Rights Reserved</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
